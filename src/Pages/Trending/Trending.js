@@ -9,7 +9,7 @@ const Trending = () => {
     const [content, setContent] = useState([]);
 
     const fetchTrending = async () => {
-        const url = "https://api.themoviedb.org/3/trending/all/day?language=en-US";
+        const url = `https://api.themoviedb.org/3/trending/all/day?page=${page}`;
         const headers = {
             Authorization:
                 `Bearer ${process.env.REACT_APP_API_KEY}`,

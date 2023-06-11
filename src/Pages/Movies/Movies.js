@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import Genres from "../../components/Genres/Genres";
+import Genres from "../../components/Genres/Genres";
 import SingleContent from "../../components/SingleContent/SingleContent";
-// import useGenre from "../../hooks/useGenre";
+import useGenre from "../../hooks/useGenre";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 
 const Movies = () => {
@@ -11,11 +11,11 @@ const Movies = () => {
     const [page, setPage] = useState(1);
     const [content, setContent] = useState([]);
     const [numOfPages, setNumOfPages] = useState();
-    //   const genreforURL = useGenre(selectedGenres);
+    const genreforURL = useGenre(selectedGenres);
     // console.log(selectedGenres);
 
     const fetchMovies = async () => {
-        const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
+        const url = `https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`;
         const headers = {
             Authorization:
                 `Bearer ${process.env.REACT_APP_API_KEY}`,
@@ -39,21 +39,19 @@ const Movies = () => {
         window.scroll(0, 0);
         fetchMovies();
         // eslint-disable-next-line
-    }, [
-        // genreforURL,
-        page]);
+    }, [genreforURL, page]);
 
     return (
         <div>
             <span className="pageTitle">Discover Movies</span>
-            {/* <Genres
-        type="movie"
-        selectedGenres={selectedGenres}
-        setSelectedGenres={setSelectedGenres}
-        genres={genres}
-        setGenres={setGenres}
-        setPage={setPage}
-      /> */}
+            <Genres
+                type="movie"
+                selectedGenres={selectedGenres}
+                setSelectedGenres={setSelectedGenres}
+                genres={genres}
+                setGenres={setGenres}
+                setPage={setPage}
+            />
             <div className="trending">
                 {content &&
                     content.map((c) => (
